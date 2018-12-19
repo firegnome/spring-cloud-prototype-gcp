@@ -16,7 +16,7 @@ node('docker') {
 
     stage('Testing / Building') {
         docker.image('openjdk:8-slim').inside {
-            dir('application/statisticmicroservice') {
+            dir('statisticmicroservice') {
                 sh "chmod +x gradlew"
                 try {
                     sh "./gradlew clean test sonarqube ${SONAR_PARAMETERS}"
@@ -31,7 +31,7 @@ node('docker') {
 
     stage('Build Docker') {
         if (BRANCH_NAME == 'develop') {
-            dir('application/statisticmicroservice') {
+            dir('statisticmicroservice') {
                 String imageName = "${gcpDockerRegistry}/${gcpProjectName}/statistic-microservice:latest"
                 docker.withRegistry("https://${gcpDockerRegistry}", dockerRegistryCredential) {
                     def image = docker.build(imageName, "--build-arg JAR_FILE=build/libs/app.jar .")
@@ -47,7 +47,7 @@ node('docker') {
             docker.image('gcr.io/cloud-builders/kubectl').inside('--entrypoint ""') {
                 withKubeConfig([credentialsId: 'application-cluster',
                                 serverUrl: kubernetesClusterIp]) {
-                    sh "kubectl apply -f application/statisticmicroservice/kubernetes/"
+                    sh "kubectl apply -f statisticmicroservice/kubernetes/"
                     sh "kubectl patch deployment statistic-microservice -p \"{\\\"spec\\\":{\\\"template\\\":{\\\"metadata\\\":{\\\"labels\\\":{\\\"modified\\\":\\\"${new SimpleDateFormat("dd.MM.yyyy_hh-mm-ss").format(new Date())}-${COMMIT_ID}\\\"}}}}}\""
                 }
             }

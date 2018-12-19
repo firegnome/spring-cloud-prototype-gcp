@@ -15,7 +15,7 @@ node('docker') {
 
     stage('Build Angular') {
         docker.image('node:10-alpine').inside {
-            dir ('application/frontend') {
+            dir ('frontend') {
                 sh 'yarn install --network-timeout 1000000'
                 sh 'yarn run build --prod'
             }
@@ -24,7 +24,7 @@ node('docker') {
     
     stage('Build Docker') {
         if (BRANCH_NAME == 'develop') {
-            dir('application/frontend') {
+            dir('frontend') {
                 String imageName = "${gcpDockerRegistry}/${gcpProjectName}/frontend:latest"
                 docker.withRegistry("https://${gcpDockerRegistry}", dockerRegistryCredential) {
                     def image = docker.build(imageName)
@@ -40,7 +40,7 @@ node('docker') {
             docker.image('gcr.io/cloud-builders/kubectl').inside('--entrypoint ""') {
                 withKubeConfig([credentialsId: 'application-cluster',
                                 serverUrl: kubernetesClusterIp]) {
-                    sh "kubectl apply -f application/frontend/kubernetes/"
+                    sh "kubectl apply -f frontend/kubernetes/"
                     sh "kubectl patch deployment frontend -p \"{\\\"spec\\\":{\\\"template\\\":{\\\"metadata\\\":{\\\"labels\\\":{\\\"modified\\\":\\\"${new SimpleDateFormat("dd.MM.yyyy_hh-mm-ss").format(new Date())}-${COMMIT_ID}\\\"}}}}}\""
                 }
             }

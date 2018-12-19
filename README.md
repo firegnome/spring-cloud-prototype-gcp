@@ -1,4 +1,4 @@
-# Blog Application
+# Architecture Prototype of a Spring Cloud Application on GCP - Blog Application
 
 The blog application is a fictitious blog system demonstrating microservices as well as domain-driven-design. 
 
@@ -129,7 +129,7 @@ The cloud build will generate following:
 
 To prevent the project to constantly create you costs, you can simply delete the whole project and you won't have any further costs:
 ```
-gcloud projects delete [YOUR_PROJECT_NAME]
+gcloud projects delete [GCP_PROJECT_NAME]
 ```
 
 ## Devtools
@@ -143,7 +143,7 @@ If you are inerested in what development tools could be used, have a look at the
 
 ## License
 
-This project is made avaible under the MIT License. See the [LICENSE](LICENSE) file for the full license.
+This project is made available under the MIT License. See the [LICENSE](LICENSE) file for the full license.
 
 The logos used in the diagrams are registered trademarks of Google LLC (Google Cloud), 
 Pivotal Software Inc (Spring), Docker Inc. (Docker), Salvatore Sanfilippo (Redis)
