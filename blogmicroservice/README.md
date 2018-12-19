@@ -5,7 +5,7 @@ On startup it loads the configuration of the `Config Service`.
 To store the blog data, it uses the `Blog Database`, a [Google Cloud Datastore](https://cloud.google.com/datastore/) and caches the blog data in `Blog Cache` a [Google Cloud Memorystore](https://cloud.google.com/memorystore/) for [Redis](https://redis.io/). 
 It also interacts with the `Event Bus`, a [Google Cloud PubSub](https://cloud.google.com/pubsub/), where other microservices can subscribe to.
 
-![Blog Service Deployment](./_resources/deployment_blog.png)
+![Blog Service Deployment](../_resources/deployment_blog.png)
 
 ## Technologies
 
