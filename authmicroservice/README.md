@@ -4,7 +4,7 @@ The `Auth Service` backend is a [Spring Boot](https://spring.io/projects/spring-
 On startup it loads the configuration of the `Config Service`.
 To store the user data, it uses the `User Database`, a [PostgreSQL](https://www.postgresql.org/) database in [Google Cloud SQL](https://cloud.google.com/sql/).
 
-![Auth Service Deployment](./_resources/deployment_auth.png)
+![Auth Service Deployment](../_resources/deployment_auth.png)
 
 ## Technologies
 
