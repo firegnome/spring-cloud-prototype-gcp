@@ -1,0 +1,11 @@
+<nav class="navbar navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Blog-Application</a>
+  <button (click)="logout()" class="btn btn-light" *ngIf="isLoggedIn()">
+    Logout <b>{{ getLoggedInUsername() }}</b>
+  </button>
+  <button routerLink="/login" class="btn btn-light" *ngIf="!isLoggedIn()">
+    Login
+  </button>
+</nav>
+<router-outlet></router-outlet>
+

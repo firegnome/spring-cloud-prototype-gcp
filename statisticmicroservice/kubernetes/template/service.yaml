@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: statistic-microservice
+spec:
+  selector:
+    app: statistic-microservice
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http-server

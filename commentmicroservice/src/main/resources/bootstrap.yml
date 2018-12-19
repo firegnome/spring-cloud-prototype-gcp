@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: comment-microservice
+  cloud:
+    config:
+      uri: http://config-microservice:8088

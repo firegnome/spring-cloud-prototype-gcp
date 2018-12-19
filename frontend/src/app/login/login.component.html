@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="my-4">Login</h1>
+
+      <form [formGroup]="loginForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text"
+                 id="username"
+                 formControlName="username"
+                 class="form-control"
+                 aria-describedby="emailHelp"
+                 placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password"
+                 id="password"
+                 formControlName="password"
+                 class="form-control"
+                 placeholder="Password">
+        </div>
+        <div *ngIf="hasError" class="alert alert-danger" role="alert">
+          Wrong username or password.
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+        <button class="btn btn-outline-primary" routerLink="/register">Create Account</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        blogEvents:  # spring internal name
+          destination: blog_events # google cloud pubsub name
+          content-type: application/json
+      gcp:
+        pubsub:
+          bindings:
+            blogEvents: # spring internal name
+              consumer:
+                auto-create-resources: true
+  cache:
+    type: redis
+  redis:
+    host: 10.0.0.3
+    port: 6379
+server:
+  port: 8080

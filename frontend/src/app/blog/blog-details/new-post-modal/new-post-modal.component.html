@@ -1,0 +1,22 @@
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create Post</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="title" class="col-form-label">Title:</label>
+      <input type="text" class="form-control" ngbAutofocus id="title" formControlName="title" minlength="3" required/>
+    </div>
+    <div class="form-group">
+      <label for="content" class="col-form-label">Content:</label>
+      <textarea class="form-control" id="content" formControlName="content" minlength="3" required rows="10"></textarea>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Close click')">Close</button>
+    <button class="btn btn-primary" [disabled]="!myForm.valid">Create Post</button>
+  </div>
+</form>

@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="my-4">All Blogs</h1>
+
+      <button *ngIf="isUserLoggedIn()" class="btn btn-primary mb-4" (click)="openNewBlogModal()">Create new Blog</button>
+      <div *ngIf="!isUserLoggedIn()" class="alert alert-primary" role="alert">
+        <a routerLink="/login">Log in</a> to create a blog! 🎉
+      </div>
+      <div *ngFor="let blog of blogs" class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title">{{blog.name}}</h2>
+          <p class="card-text">{{blog.description}}</p>
+          <a routerLink="/blog/{{blog.id}}" class="btn btn-primary">Show Blog →</a>
+        </div>
+        <div class="card-footer text-muted">
+          Created on {{blog.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

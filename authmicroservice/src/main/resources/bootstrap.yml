@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: auth-microservice
+  cloud:
+    config:
+      uri: http://config-microservice:8088
+  main:
+    allow-bean-definition-overriding: true
+# Hibernate ddl auto (create, create-drop, validate, update)
+spring.jpa.hibernate.ddl-auto: update

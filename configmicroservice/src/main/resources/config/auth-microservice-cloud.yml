@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: auth-microservice
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp.use_jdbc_metadata_defaults: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximumPoolSize: 5
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
+
+server:
+  port: 8080

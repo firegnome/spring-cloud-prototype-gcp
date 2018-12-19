@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: config-microservice
+spec:
+  selector:
+    app: config-microservice
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 8088
+    targetPort: http-server

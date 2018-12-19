@@ -1,0 +1,52 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: auth-microservice
+  labels:
+    app: auth-microservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: auth-microservice
+        tier: backend
+    spec:
+      containers:
+      - name: auth
+        image: eu.gcr.io/PROJECT_NAME/auth-microservice:latest
+        ports:
+        - name: http-server
+          containerPort: 8080
+        imagePullPolicy: Always
+        env:
+        - name: POSTGRES_DB_HOST
+          value: 127.0.0.1:5432
+        - name: POSTGRES_DB_DATABASE
+          value: user_database
+        - name: POSTGRES_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: cloudsql-db-credentials
+              key: username
+        - name: POSTGRES_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cloudsql-db-credentials
+              key: password
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.11
+        command:
+          [
+            '/cloud_sql_proxy',
+            '-instances=PROJECT_NAME:ZONE:userdb=tcp:5432',
+            '-credential_file=/secrets/cloudsql/credentials.json',
+          ]
+        volumeMounts:
+        - name: cloudsql-instance-credentials
+          mountPath: /secrets/cloudsql
+          readOnly: true
+      volumes:
+      - name: cloudsql-instance-credentials
+        secret:
+          secretName: cloudsql-instance-credentials

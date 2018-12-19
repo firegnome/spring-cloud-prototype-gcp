@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row" *ngIf="blogPost">
+    <div class="col-lg-8">
+      <h1 class="mt-4">{{blogPost.title}}</h1>
+      <p class="lead">
+        by
+        {{username}}
+      </p>
+      <hr>
+      <p>Posted on {{blogPost.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+      <hr>
+      <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+      <hr>
+      <p class="lead">{{headline}}</p>
+      <p *ngFor="let section of sections">{{section}}</p>
+      <hr>
+      <div class="card my-4" *ngIf="isUserLoggedIn()">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+          <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+            <div class="form-group">
+              <textarea class="form-control" rows="3" formControlName="comment" minlength="3" maxlength="256"
+                        required></textarea>
+            </div>
+            <button class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="!isUserLoggedIn()" class="alert alert-primary" role="alert">
+        <a routerLink="/login">Log in</a> to create comments 🎉
+      </div>
+      <div class="media mb-4" *ngFor="let comment of blogPostComments">
+        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <div class="media-body">
+          <h5 class="mt-0">{{comment.userName ? comment.userName : 'unknown'}}
+            <small>{{comment.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</small>
+          </h5>
+          {{comment.comment}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4" *ngIf="blogPostVisitCount">
+      <div class="card my-4">
+        <h5 class="card-header">Views</h5>
+        <div class="card-body">
+          {{blogPostVisitCount}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: comment-microservice
+spec:
+  selector:
+    app: comment-microservice
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http-server

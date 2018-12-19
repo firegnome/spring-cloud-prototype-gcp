@@ -1,0 +1,49 @@
+#!/usr/bin/env groovy
+import java.text.SimpleDateFormat
+
+node('docker') {
+    stage('Checkout') {
+        checkout scm
+    }
+
+    def COMMIT_ID = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+
+    def gcpDockerRegistry = '[DOCKER_REGISTRY_URL]' // e.g. eu.gcr.io
+    def gcpProjectName = '[GCP_PROJECT_NAME]';
+    def dockerRegistryCredential = 'gcr:[JENKINS_GCP_DOCKER_CREDENTIALS]'
+    def kubernetesClusterIp = 'https://[TARGET_CLUSTER_IP]'
+
+    stage('Build Angular') {
+        docker.image('node:10-alpine').inside {
+            dir ('application/frontend') {
+                sh 'yarn install --network-timeout 1000000'
+                sh 'yarn run build --prod'
+            }
+        }
+    }
+    
+    stage('Build Docker') {
+        if (BRANCH_NAME == 'develop') {
+            dir('application/frontend') {
+                String imageName = "${gcpDockerRegistry}/${gcpProjectName}/frontend:latest"
+                docker.withRegistry("https://${gcpDockerRegistry}", dockerRegistryCredential) {
+                    def image = docker.build(imageName)
+                    image.push()
+                }
+            }
+        }
+    }
+
+    stage('Kubectl Deploy') {
+        if (BRANCH_NAME == 'develop') {
+            // override default entrypoint of docker image
+            docker.image('gcr.io/cloud-builders/kubectl').inside('--entrypoint ""') {
+                withKubeConfig([credentialsId: 'application-cluster',
+                                serverUrl: kubernetesClusterIp]) {
+                    sh "kubectl apply -f application/frontend/kubernetes/"
+                    sh "kubectl patch deployment frontend -p \"{\\\"spec\\\":{\\\"template\\\":{\\\"metadata\\\":{\\\"labels\\\":{\\\"modified\\\":\\\"${new SimpleDateFormat("dd.MM.yyyy_hh-mm-ss").format(new Date())}-${COMMIT_ID}\\\"}}}}}\""
+                }
+            }
+        }
+    }
+}

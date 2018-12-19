@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: gateway-microservice
+server:
+  port: 8181

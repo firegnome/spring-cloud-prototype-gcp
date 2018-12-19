@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="my-4">Create new Account</h1>
+
+      <form [formGroup]="registerForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text"
+                 id="username"
+                 formControlName="username"
+                 class="form-control"
+                 aria-describedby="emailHelp"
+                 placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password"
+                 id="password"
+                 formControlName="password"
+                 class="form-control"
+                 placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="createAccount()">Register</button>
+        <button class="btn btn-outline-primary" routerLink="/login">Login with existing account</button>
+      </form>
+    </div>
+  </div>
+</div>

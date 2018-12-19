@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: config-microservice
+  labels:
+    app: config-microservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: config-microservice
+        tier: backend
+    spec:
+      containers:
+      - name: config
+        image: eu.gcr.io/PROJECT_NAME/config-microservice:latest
+        ports:
+        - name: http-server
+          containerPort: 8088
+        imagePullPolicy: Always

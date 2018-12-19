@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: comment-microservice
+  labels:
+    app: comment-microservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: comment-microservice
+        tier: backend
+    spec:
+      containers:
+      - name: comment
+        image: eu.gcr.io/PROJECT_NAME/comment-microservice:latest
+        volumeMounts:
+        - name: google-cloud-key
+          mountPath: /var/secrets/google
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/credentials.json
+        ports:
+        - name: http-server
+          containerPort: 8080
+        imagePullPolicy: Always
+      volumes:
+      - name: google-cloud-key
+        secret:
+          secretName: comment-secret

@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: auth-microservice
+spec:
+  selector:
+    app: auth-microservice
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http-server

@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: gateway-microservice
+  cloud:
+    config:
+      uri: http://config-microservice:8088
+    gateway:
+      routes:
+      - id: blog_route
+        uri: http://blog-microservice
+        order: 0
+        predicates:
+        - Path=/api/blog/**
+      - id: comment_route
+        uri: http://comment-microservice
+        order: 0
+        predicates:
+        - Path=/api/comment/**
+      - id: statistic_route
+        uri: http://statistic-microservice
+        order: 0
+        predicates:
+        - Path=/api/statistic/**
+      - id: auth_route
+        uri: http://auth-microservice
+        order: 0
+        predicates:
+        - Path=/auth/**
+        filters:
+        - RewritePath=/auth/(?<segment>.*), /$\{segment}
+      - id: html
+        uri: http://frontend
+        order: 1
+        predicates:
+        - Path=/**

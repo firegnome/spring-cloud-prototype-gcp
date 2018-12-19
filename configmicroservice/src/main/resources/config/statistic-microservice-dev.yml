@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: statistic-microservice
+  cloud:
+    stream:
+      bindings:
+        blogEvents:  # spring internal name
+          destination: blog_events # google cloud pubsub name
+          content-type: application/json
+      gcp:
+        pubsub:
+          bindings:
+            blogEvents: # spring internal name
+              consumer:
+                auto-create-resources: true
+server:
+  port: 8183

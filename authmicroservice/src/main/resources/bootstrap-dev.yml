@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: auth-microservice
+  cloud:
+    config:
+      uri: http://localhost:8088

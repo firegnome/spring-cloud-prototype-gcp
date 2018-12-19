@@ -1,0 +1,56 @@
+#!/usr/bin/env groovy
+import java.text.SimpleDateFormat
+
+node('docker') {
+    stage('Checkout') {
+        checkout scm
+    }
+
+    def SONAR_PARAMETERS = '-Dsonar.host.url=http://[SONAR_IP]/sonar -Dsonar.login=[SONAR_ACCESS_TOKEN]'
+    def COMMIT_ID = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+
+    def gcpDockerRegistry = '[DOCKER_REGISTRY_URL]' // e.g. eu.gcr.io
+    def gcpProjectName = '[GCP_PROJECT_NAME]';
+    def dockerRegistryCredential = 'gcr:[JENKINS_GCP_DOCKER_CREDENTIALS]'
+    def kubernetesClusterIp = 'https://[TARGET_CLUSTER_IP]'
+
+    stage('Testing / Building') {
+        docker.image('openjdk:8-slim').inside {
+            dir('application/statisticmicroservice') {
+                sh "chmod +x gradlew"
+                try {
+                    sh "./gradlew clean test sonarqube ${SONAR_PARAMETERS}"
+                } finally {
+                    junit 'build/test-results/test/*.xml'
+                }
+                sh "./gradlew build"
+                sh "mv build/libs/*.jar build/libs/app.jar"
+            }
+        }
+    }
+
+    stage('Build Docker') {
+        if (BRANCH_NAME == 'develop') {
+            dir('application/statisticmicroservice') {
+                String imageName = "${gcpDockerRegistry}/${gcpProjectName}/statistic-microservice:latest"
+                docker.withRegistry("https://${gcpDockerRegistry}", dockerRegistryCredential) {
+                    def image = docker.build(imageName, "--build-arg JAR_FILE=build/libs/app.jar .")
+                    image.push()
+                }
+            }
+        }
+    }
+
+    stage('Kubectl Deploy') {
+        if (BRANCH_NAME == 'develop') {
+            // override default entrypoint of docker image
+            docker.image('gcr.io/cloud-builders/kubectl').inside('--entrypoint ""') {
+                withKubeConfig([credentialsId: 'application-cluster',
+                                serverUrl: kubernetesClusterIp]) {
+                    sh "kubectl apply -f application/statisticmicroservice/kubernetes/"
+                    sh "kubectl patch deployment statistic-microservice -p \"{\\\"spec\\\":{\\\"template\\\":{\\\"metadata\\\":{\\\"labels\\\":{\\\"modified\\\":\\\"${new SimpleDateFormat("dd.MM.yyyy_hh-mm-ss").format(new Date())}-${COMMIT_ID}\\\"}}}}}\""
+                }
+            }
+        }
+    }
+}

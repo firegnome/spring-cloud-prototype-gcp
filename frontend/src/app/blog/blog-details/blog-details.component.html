@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8" *ngIf="blog">
+      <h1 class="my-4">{{blog.name}}</h1>
+
+      <button *ngIf="isBlogOwner()" class="btn btn-primary mb-4" (click)="openNewPostModal()">Create new Post</button>
+
+      <div *ngIf="blog && blogPosts">
+        <div class="card mb-4" *ngFor="let post of blogPosts">
+          <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+          <div class="card-body">
+            <h2 class="card-title">{{post.title}}</h2>
+            <p class="card-text">{{post.content}}</p>
+            <a routerLink="/blog/{{blog.id}}/post/{{post.id}}" class="btn btn-primary">Show Post →</a>
+          </div>
+          <div class="card-footer text-muted">
+            Created on {{post.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-4" *ngIf="blog">
+      <div class="card my-4">
+        <h5 class="card-header">Created</h5>
+        <div class="card-body">
+          {{blog.created * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+      </div>
+      <div class="card my-4">
+        <h5 class="card-header">Description</h5>
+        <div class="card-body">
+          {{blog.description}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
