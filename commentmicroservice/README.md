@@ -4,7 +4,7 @@ The `Comment Service` backend is a [Spring Boot](https://spring.io/projects/spri
 On startup it loads the configuration of the `Config Service`.
 To store the comment data, it uses the `Blog Database`.
 
-![Comment Service Deployment](./_resources/deployment_comment.png)
+![Comment Service Deployment](../_resources/deployment_comment.png)
 
 ## Technologies
 
