@@ -4,7 +4,7 @@ The `Gateway / Router` backend is a [Spring Cloud Gateway](http://spring.io/proj
 On startup it loads the configuration of the `Config Service`.
 The `Gateway / Router` is accessible through the `HTTP Router`, a [Google Cloud Ingress](https://cloud.google.com/kubernetes-engine/docs/concepts/ingress).
 
-![Gateway / Router Deployment](./_resources/deployment_gateway.png)
+![Gateway / Router Deployment](../_resources/deployment_gateway.png)
 
 ## Technologies
 
