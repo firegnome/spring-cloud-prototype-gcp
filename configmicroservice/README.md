@@ -3,7 +3,7 @@
 The `Config Service` backend is a [Spring Cloud Config](https://spring.io/projects/spring-cloud-config) server. It provides the configuration for most of the microservices. 
 On any time, they can pull their configuration.
 
-![Config Service Deployment](./_resources/deployment_config.png)
+![Config Service Deployment](../_resources/deployment_config.png)
 
 ## Technologies
 
