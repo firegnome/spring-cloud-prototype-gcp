@@ -4,7 +4,7 @@ The `Statistic Service` backend is a [Spring Boot](https://spring.io/projects/sp
 On startup it loads the configuration of the `Config Service` and subscribes to the `Event Bus` to get the events.
 To store the statistic data, it uses the `Statistic Database`, a [Google Cloud Datastore](https://cloud.google.com/datastore/).
 
-![Statistic Service Deployment](./_resources/deployment_statistic.png)
+![Statistic Service Deployment](../_resources/deployment_statistic.png)
 
 ## Technologies
 
