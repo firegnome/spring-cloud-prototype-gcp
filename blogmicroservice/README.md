@@ -1,7 +1,7 @@
 # Blog Service
 
-The `Blog Service` backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is the core domain and manages the blogs and posts.
-On startup it loads the configuration of the `Config Service`.
+The [Blog Service](../blogmicroservice) backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is the core domain and manages the blogs and posts.
+On startup it loads the configuration of the [Config Service](../configmicroservice).
 To store the blog data, it uses the `Blog Database`, a [Google Cloud Datastore](https://cloud.google.com/datastore/) and caches the blog data in `Blog Cache` a [Google Cloud Memorystore](https://cloud.google.com/memorystore/) for [Redis](https://redis.io/). 
 It also interacts with the `Event Bus`, a [Google Cloud PubSub](https://cloud.google.com/pubsub/), where other microservices can subscribe to.
 
@@ -19,7 +19,7 @@ This microservice consists of following technologies:
 
 ### Microservices
 
-* `Config Service`
+* [Config Service](../configmicroservice)
 
 ### Components
 

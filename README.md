@@ -15,43 +15,43 @@ The following diagram shows an overview of the blog microservices, datastores an
 
 * **[Config Service](configmicroservice)**
 
-    The `Config Service` backend is a [Spring Cloud Config](https://spring.io/projects/spring-cloud-config) server. It provides the configuration for most of the microservices. 
+    The [Config Service](./configmicroservice) backend is a [Spring Cloud Config](https://spring.io/projects/spring-cloud-config) server. It provides the configuration for most of the microservices. 
     On any time, they can pull their configuration.
 
 * **[Blog Service](blogmicroservice)**
 
-    The `Blog Service` backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is the core domain and manages the blogs and posts.
-    On startup it loads the configuration of the `Config Service`.
+    The [Blog Service](./blogmicroservice) backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is the core domain and manages the blogs and posts.
+    On startup it loads the configuration of the [Config Service](./configmicroservice).
     To store the blog data, it uses the `Blog Database`, a [Google Cloud Datastore](https://cloud.google.com/datastore/) and caches the blog data in `Blog Cache` a [Google Cloud Memorystore](https://cloud.google.com/memorystore/) for [Redis](https://redis.io/). 
     It also interacts with the `Event Bus`, a [Google Cloud PubSub](https://cloud.google.com/pubsub/), where other microservices can subscribe to.
 
 * **[Auth Service](authmicroservice)**
 
-    The `Auth Service` backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for the creation and verification of user accounts over [JSON Web Tokens (JWT)](https://jwt.io/).
-    On startup it loads the configuration of the `Config Service`.
+    The [Auth Service](./authmicroservice) backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for the creation and verification of user accounts over [JSON Web Tokens (JWT)](https://jwt.io/).
+    On startup it loads the configuration of the [Config Service](./configmicroservice).
     To store the user data, it uses the `User Database`, a [PostgreSQL](https://www.postgresql.org/) database in [Google Cloud SQL](https://cloud.google.com/sql/).
 
 * **[Comment Service](commentmicroservice)**
 
-    The `Comment Service` backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for the comments of the blog posts.
-    On startup it loads the configuration of the `Config Service`.
+    The [Comment Service](./commentmicroservice) backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for the comments of the blog posts.
+    On startup it loads the configuration of the [Config Service](./configmicroservice).
     To store the comment data, it uses the `Blog Database`.
 
 * **[Statistic Service](statisticmicroservice)**
 
-    The `Statistic Service` backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for keeping statistic over blog activities, such as viewing a blog post.
-    On startup it loads the configuration of the `Config Service` and subscribes to the `Event Bus` to get the events.
+    The [Statistic Service](./statisticmicroservice) backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for keeping statistic over blog activities, such as viewing a blog post.
+    On startup it loads the configuration of the [Config Service](./configmicroservice) and subscribes to the `Event Bus` to get the events.
     To store the statistic data, it uses the `Statistic Database`, a [Google Cloud Datastore](https://cloud.google.com/datastore/).
 
 * **[Gateway / Router](gatewaymicroservice)**
 
-    The `Gateway / Router` backend is a [Spring Cloud Gateway](http://spring.io/projects/spring-cloud-gateway) server. It is responsible for the routing to the `Frontend` as well to the microservices.
-    On startup it loads the configuration of the `Config Service`.
-    The `Gateway / Router` is accessible through the `HTTP Router`, a [Google Cloud Ingress](https://cloud.google.com/kubernetes-engine/docs/concepts/ingress).
+    The [Gateway / Router](./gatewaymicroservice) backend is a [Spring Cloud Gateway](http://spring.io/projects/spring-cloud-gateway) server. It is responsible for the routing to the [Frontend](./frontend) as well to the microservices.
+    On startup it loads the configuration of the [Config Service](./configmicroservice).
+    The [Gateway / Router](./gatewaymicroservice) is accessible through the `HTTP Router`, a [Google Cloud Ingress](https://cloud.google.com/kubernetes-engine/docs/concepts/ingress).
 
 * **[Frontend](frontend)**
 
-    The `Frontend` is a static [Angular](https://angular.io/) webpage with [Bootstrap](https://getbootstrap.com/), served by a [NGINX](https://www.nginx.com/) webserver.
+    The [Frontend](./frontend) is a static [Angular](https://angular.io/) webpage with [Bootstrap](https://getbootstrap.com/), served by a [NGINX](https://www.nginx.com/) webserver.
 
 ## Getting Started
 

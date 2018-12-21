@@ -1,7 +1,7 @@
 # Comment Service
 
-The `Comment Service` backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for the comments of the blog posts.
-On startup it loads the configuration of the `Config Service`.
+The [Comment Service](../commentmicroservice) backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for the comments of the blog posts.
+On startup it loads the configuration of the [Config Service](../configmicroservice).
 To store the comment data, it uses the `Blog Database`.
 
 ![Comment Service Deployment](../_resources/deployment_comment.png)
@@ -16,7 +16,7 @@ This microservice consists of following technologies:
 
 ### Microservices:
 
-* `Config Service`
+* [Config Service](../configmicroservice)
 
 ### Components:
 

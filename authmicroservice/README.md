@@ -1,7 +1,7 @@
 # Auth Service
 
-The `Auth Service` backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for the creation and verification of user accounts over [JSON Web Tokens (JWT)](https://jwt.io/).
-On startup it loads the configuration of the `Config Service`.
+The [Auth Service](../authmicroservice) backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for the creation and verification of user accounts over [JSON Web Tokens (JWT)](https://jwt.io/).
+On startup it loads the configuration of the [Config Service](../configmicroservice).
 To store the user data, it uses the `User Database`, a [PostgreSQL](https://www.postgresql.org/) database in [Google Cloud SQL](https://cloud.google.com/sql/).
 
 ![Auth Service Deployment](../_resources/deployment_auth.png)
@@ -18,7 +18,7 @@ This microservice consists of following technologies:
 
 ### Microservices:
 
-* `Config Service`
+* [Config Service](../configmicroservice)
 
 ### Components:
 

@@ -1,7 +1,7 @@
 # Statistic Service
 
-The `Statistic Service` backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for keeping statistic over blog activities, such as viewing a blog post.
-On startup it loads the configuration of the `Config Service` and subscribes to the `Event Bus` to get the events.
+The [Statistic Service](../statisticmicroservice) backend is a [Spring Boot](https://spring.io/projects/spring-boot) application. It is responsible for keeping statistic over blog activities, such as viewing a blog post.
+On startup it loads the configuration of the [Config Service](../configmicroservice) and subscribes to the `Event Bus` to get the events.
 To store the statistic data, it uses the `Statistic Database`, a [Google Cloud Datastore](https://cloud.google.com/datastore/).
 
 ![Statistic Service Deployment](../_resources/deployment_statistic.png)
@@ -17,7 +17,7 @@ This microservice consists of following technologies:
 
 ### Microservices:
 
-* `Config Service`
+* [Config Service](../configmicroservice)
 
 ### Components:
 

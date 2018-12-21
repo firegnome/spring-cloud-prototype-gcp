@@ -1,6 +1,6 @@
 # Frontend
 
-The `Frontend` is a static [Angular](https://angular.io/) webpage with [Bootstrap](https://getbootstrap.com/), served by a [NGINX](https://www.nginx.com/) webserver.
+The [Frontend](../frontend) is a static [Angular](https://angular.io/) webpage with [Bootstrap](https://getbootstrap.com/), served by a [NGINX](https://www.nginx.com/) webserver.
 
 ![Frontend Deployment](../_resources/deployment_frontend.png)
 
